@@ -94,6 +94,7 @@ int s21_round(s21_decimal value, s21_decimal *result);
 // Возвращает целые цифры указанного Decimal числа; любые дробные цифры
 // отбрасываются, включая конечные нули
 int s21_truncate(s21_decimal value, s21_decimal *result);
+void s21_truncate_buf(s21_decimal *buf, int exp);
 
 //  результат умножения указанного Decimal на -1
 int s21_negate(s21_decimal value, s21_decimal *result);
@@ -102,35 +103,29 @@ int s21_negate(s21_decimal value, s21_decimal *result);
     =========================================
     вспомогательные функции
 */
+
 // Проверить знак переменной если >0 то вернет 0, а если <0 то 1
 int is_int_negative(int value);
-
-// Установить бит под номером BitNumber в значение 1 в переменной value
-void set_1_bit(unsigned int *value, int BitNumber);
-
-/*
-    function set_1_bit
-    Установить бит под номером BitNumber в значение 1 в переменной value
-*/
 
 /*
     функции из видео про работу с битами
 */
-// 250 интов  это 205 * 32 бита = 8000 бит
-
 int get_row(int bit);
 int get_col(int bit);
 
-bool is_set_bit(int *bit_vector, int index);
-void set_bit(int *bit_vector, int index);
+bool is_set_bit(unsigned int *bit_vector, int index);
+void set_bit(unsigned int *bit_vector, int index);
 bool inverse_bit(int *bit_vector, int index);
 bool reset_bit(int *bit_vector, int index);
 
 /*
     функции для печати двоичного содержимого int decimal
 */
-int print_bit(int a);
+int print_bit(unsigned int a);
 void print_bit_int(int a);
 void print_bit_dec(int a, int b, int c, int d);
+
+// конветация к десятиччной
+int s21_10_conv(s21_decimal value);
 
 #endif  // SRC_S21_DECIMAL_H_

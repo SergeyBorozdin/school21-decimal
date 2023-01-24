@@ -12,71 +12,54 @@ int is_int_negative(int value) {
 }
 
 /*
-    function set_1_bit
-    Установить бит под номером BitNumber в значение 1 в переменной value
-*/
-void set_1_bit(unsigned int *value, int BitNumber) {
-  *value |= (1 << BitNumber);
-}
-
-/*
     функкции из видео для работы с битами
+
 */
 
-/*
-    проверка бита
-*/
-bool is_set_bit(int *bit_vector, int index) {
+// проверка бита
+bool is_set_bit(unsigned int *bit_vector, int index) {
   int index_row = get_row(index);
   int index_col = get_col(index);
   return (bit_vector[index_row] & (1 << index_col)) != 0;
 }
 
-/*
-    установка бита в 1
-*/
-void set_bit(int *bit_vector, int index) {
+// установка бита в 1
+void set_bit(unsigned int *bit_vector, int index) {
   int index_row = get_row(index);
   int index_col = get_col(index);
   bit_vector[index_row] |= 1 << index_col;
 }
 
-/*
-    инверсия бита
-*/
+// инверсия бита
 bool inverse_bit(int *bit_vector, int index) {
   int index_row = get_row(index);
   int index_col = get_col(index);
   return bit_vector[index_row] ^= 1 << index_col;
 }
 
-/*
-    установкака бита в 0
-*/
+// установкака бита в 0
 bool reset_bit(int *bit_vector, int index) {
   int index_row = get_row(index);
   int index_col = get_col(index);
   return bit_vector[index_row] &= ~(1 << index_col);
 }
 
-/*
-    возвращает номер строки в битовом векторе
-*/
+// возвращает номер строки в битовом векторе
 int get_row(int bit) { return (int)floor(bit >> 5); }
 
-/*
-    возвращает номер столбца в битовом векторе
-*/
+// возвращает номер столбца в битовом векторе
 int get_col(int bit) { return bit % 32; }
 
 /*
     функции для печати битов инта, децимал
+    =====================================
 */
 
-int print_bit(int a) {
+// вспомогательная функция для печати
+int print_bit(unsigned int a) {
   int count = 0;
   char bit_int[COUNT_BIT_INT];
-  int *pa = &a;
+  unsigned int *pa = &a;
   int i = 0;
   for (; i != COUNT_BIT_INT; i++) {
     ++count;
@@ -93,12 +76,14 @@ int print_bit(int a) {
   return count;
 }
 
+// печатает инт
 void print_bit_int(int a) {
   int count = 0;
   count += print_bit(a);
   printf("\ncount_bit - %d\n", count);
 }
 
+// печатает децимал от инта
 void print_bit_dec(int a, int b, int c, int d) {
   int count = 0;
   count += print_bit(d);
@@ -109,4 +94,15 @@ void print_bit_dec(int a, int b, int c, int d) {
   printf(" | ");
   count += print_bit(a);
   printf("\ncount_bit - %d\n", count);
+}
+
+// конветация к десятичной
+int s21_10_conv(s21_decimal value) {
+  int result = 0;
+  int power = 1;
+  for (int i = 16; i < 21; i++, power = power * 2)
+    if (is_set_bit(&value.bits[3], i)) {
+      result = result + power;
+    }
+  return result;
 }

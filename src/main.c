@@ -2,7 +2,7 @@
 
 int main() {
   s21_decimal b;
-  int a = 1;
+  int a = 2147483647;
   s21_from_int_to_decimal(a, &b);
   int dec1 = b.bits[0], dec2 = b.bits[1], dec3 = b.bits[2], dec4 = b.bits[3];
 
